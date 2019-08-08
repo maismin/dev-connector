@@ -6,7 +6,10 @@ const db = config.MONGODB_URI
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, { useNewUrlParser: true })
+    await mongoose.connect(db, {
+      useNewUrlParser: true,
+      useCreateIndex: true
+    })
     logger.info('connected to MongoDB')
   } catch(err) {
     logger.error('error connection to MongoDB:', err.message)
