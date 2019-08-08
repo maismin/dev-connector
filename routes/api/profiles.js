@@ -168,11 +168,11 @@ router.delete('/', auth, async (req, res) => {
   }
 })
 
-// @route   PUT api/profiles/experience
+// @route   PUT api/profiles/experiences
 // @desc    Add profile experience
 // @access  Private
 router.put(
-  '/experience',
+  '/experiences',
   [
     auth,
     [
