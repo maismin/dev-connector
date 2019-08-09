@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useField } from '../../hooks'
 import { setAlert } from '../../actions/alert'
+import { register } from '../../actions/auth'
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const name = useField('text')
   const email = useField('email')
   const password = useField('password')
@@ -16,7 +17,11 @@ const Register = ({ setAlert }) => {
     if (password.value !== password2.value) {
       setAlert('Passwords do not match', 'danger')
     } else {
-      console.log(name.value, email.value, password.value, password2.value)
+      register({
+        name: name.value,
+        email: email.value,
+        password: password.value,
+      })
     }
   }
 
@@ -66,10 +71,12 @@ const Register = ({ setAlert }) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = {
   setAlert,
+  register,
 }
 
 export default connect(
