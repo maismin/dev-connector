@@ -5,6 +5,7 @@ module.exports = () => ({
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 3000,
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:5000',
     },
