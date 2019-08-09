@@ -15,5 +15,5 @@ module.exports = {
   PORT,
   JWTSECRET,
   GITHUBCLIENTID,
-  GITHUBSECRET
+  GITHUBSECRET,
 }

@@ -19,4 +19,6 @@ app.use('/api/posts', require('./routes/api/posts'))
 app.use('/api/profiles', require('./routes/api/profiles'))
 app.use('/api/users', require('./routes/api/users'))
 
-app.listen(config.PORT, () => logger.info(`Server started on port ${config.PORT}`))
+app.listen(config.PORT, () =>
+  logger.info(`Server started on port ${config.PORT}`),
+)

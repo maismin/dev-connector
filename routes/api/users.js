@@ -18,12 +18,16 @@ router.get('/', (req, res) => res.send('Users route'))
 // @desc    Register user
 // @access  Public
 router.post(
-  '/', 
+  '/',
   [
-    check('name', 'Name is required').not().isEmpty(),
+    check('name', 'Name is required')
+      .not()
+      .isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Please enter a password with 6 or more characters')
-      .isLength({ min: 6 })
+    check(
+      'password',
+      'Please enter a password with 6 or more characters',
+    ).isLength({ min: 6 }),
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -38,21 +42,23 @@ router.post(
       let user = await User.findOne({ email })
 
       if (user) {
-        return res.status(400).json({ errors: [{ msg: 'User already exists' }] })
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'User already exists' }] })
       }
 
       // Get users gravatar
       const avatar = gravatar.url(email, {
         size: '200',
         rating: 'pg',
-        default: 'mm'
+        default: 'mm',
       })
 
       user = new User({
         name,
         email,
         avatar,
-        password
+        password,
       })
 
       // Encrypt password using bcrypt
@@ -65,8 +71,8 @@ router.post(
       // Return jsonwebtoken
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       }
 
       jwt.sign(
@@ -78,13 +84,13 @@ router.post(
             throw err
           }
           res.status(201).json({ token })
-        }
+        },
       )
-    } catch(err) {
+    } catch (err) {
       logger.error(err.message)
       res.send(500).send('Server error')
     }
-  }
+  },
 )
 
 module.exports = router

@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth')
 const logger = require('../../utils/logger')
 
 const Post = require('../../models/Post')
-const Profile = require('../../models/Profile')
+// const Profile = require('../../models/Profile')
 const User = require('../../models/User')
 
 // @route   POST api/posts
@@ -16,8 +16,10 @@ router.post(
   [
     auth,
     [
-      check('text', 'Text is required').not().isEmpty()
-    ]
+      check('text', 'Text is required')
+        .not()
+        .isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -32,16 +34,16 @@ router.post(
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
-        user: req.user.id
+        user: req.user.id,
       })
 
       const post = await newPost.save()
       res.status(201).json(post)
-    } catch(err) {
+    } catch (err) {
       logger.error(err.message)
       res.status(500).send('Server Error')
     }
-  }
+  },
 )
 
 // @route   GET api/posts
@@ -51,7 +53,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 })
     res.json(posts)
-  } catch(err) {
+  } catch (err) {
     logger.error(err.message)
     res.status(500).send('Server Error')
   }
@@ -69,7 +71,7 @@ router.get('/:id', auth, async (req, res) => {
     }
 
     res.json(post)
-  } catch(err) {
+  } catch (err) {
     logger.error(err.message)
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Post not found' })
@@ -96,7 +98,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     await Post.findOneAndDelete({ _id: req.params.id })
     res.json({ msg: 'Post removed' })
-  } catch(err) {
+  } catch (err) {
     logger.error(err.message)
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Post not found' })
