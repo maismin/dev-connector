@@ -2,15 +2,17 @@ import { hot } from 'react-hot-loader/root'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
+import NavBar from './components/layout/NavBar'
+import Landing from './components/layout/Landing'
 
 const UnconnectedApp = props => {
   useEffect(() => {}, [])
 
   return (
-    <Container>
-      <h2>React</h2>
-    </Container>
+    <div>
+      <NavBar />
+      <Landing />
+    </div>
   )
 }
 

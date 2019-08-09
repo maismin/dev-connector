@@ -18,7 +18,7 @@ const config = ({ mode = 'production', presets = [] }) => {
             exclude: /node_modules/,
           },
           {
-            test: /\.jpe?g/,
+            test: /\.jpe?g$/,
             use: [
               {
                 loader: 'url-loader',
