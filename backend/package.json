@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
+    "client": "npm run dev --prefix ../client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint .",
     "prettier": "prettier \"**/*.+(js|json|css)\"",
     "format": "npm run prettier -- --write"
