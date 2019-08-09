@@ -133,4 +133,32 @@ router.put('/like/:id', auth, async (req, res) => {
   }
 })
 
+// @route   PUT api/posts/unlike/:id
+// @desc    Unlike a post
+// @access  Private
+router.put('/unlike/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    const filteredLikes = post.likes.filter(
+      like => like.user.toString() !== req.user.id,
+    )
+
+    // Check if the post has already been liked
+    if (post.likes.length === filteredLikes.length) {
+      return res.status(400).json({ msg: 'Post has not yet been liked' })
+    }
+
+    post.likes = filteredLikes
+    await post.save()
+    res.json(post.likes)
+  } catch (err) {
+    logger.error(err.message)
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post not found' })
+    }
+    res.status(500).send('Server Error')
+  }
+})
+
 module.exports = router
