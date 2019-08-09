@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { useField } from '../../hooks'
+import { setAlert } from '../../actions/alert'
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const name = useField('text')
   const email = useField('email')
   const password = useField('password')
@@ -11,7 +14,7 @@ const Register = () => {
   const onSubmit = e => {
     e.preventDefault()
     if (password.value !== password2.value) {
-      console.log('Passwords do not match')
+      setAlert('Passwords do not match', 'danger')
     } else {
       console.log(name.value, email.value, password.value, password2.value)
     }
@@ -61,4 +64,15 @@ const Register = () => {
   )
 }
 
-export default Register
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = {
+  setAlert,
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Register)

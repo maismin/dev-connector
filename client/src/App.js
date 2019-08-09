@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import NavBar from './components/layout/NavBar'
 import Landing from './components/layout/Landing'
+import Alert from './components/layout/Alert'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 
@@ -13,6 +14,7 @@ const UnconnectedApp = props => {
       <NavBar />
       <Route exact path="/" component={Landing} />
       <section className="container">
+        <Alert />
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
