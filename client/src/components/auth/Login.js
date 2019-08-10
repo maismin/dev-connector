@@ -1,14 +1,22 @@
 import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { Link, Redirect } from 'react-router-dom'
 import { useField } from '../../hooks'
+import { login } from '../../actions/auth'
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const email = useField('email')
   const password = useField('password')
 
   const onSubmit = e => {
     e.preventDefault()
-    console.log('SUCCESS')
+    login(email.value, password.value)
+  }
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />
   }
 
   return (
@@ -39,4 +47,20 @@ const Login = () => {
   )
 }
 
-export default Login
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+})
+
+const mapDispatchToProps = {
+  login,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login)
