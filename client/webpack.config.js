@@ -18,12 +18,13 @@ const config = ({ mode = 'production', presets = [] }) => {
             exclude: /node_modules/,
           },
           {
-            test: /\.jpe?g$/,
+            test: /\.(jpe?g|gif)$/,
             use: [
               {
                 loader: 'url-loader',
                 options: {
                   limit: 5000,
+                  fallback: 'file-loader',
                 },
               },
             ],
