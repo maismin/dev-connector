@@ -6,6 +6,7 @@ const config = require('../../utils/config')
 const logger = require('../../utils/logger')
 const { check, validationResult } = require('express-validator')
 
+const Post = require('../../models/Post')
 const Profile = require('../../models/Profile')
 const User = require('../../models/User')
 
@@ -154,13 +155,14 @@ router.get('/users/:user_id', async (req, res) => {
 // @access  Public
 router.delete('/', auth, async (req, res) => {
   try {
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id })
+
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id })
 
     // Remove user
     await User.findOneAndRemove({ _id: req.user.id })
-
-    // Remove posts
 
     res.json({ msg: 'User deleted' })
   } catch (err) {
