@@ -106,10 +106,10 @@ router.delete('/:id', auth, async (req, res) => {
   }
 })
 
-// @route   PUT api/posts/like/:id
+// @route   PUT api/posts/:id/like
 // @desc    Like a post
 // @access  Private
-router.put('/like/:id', auth, async (req, res) => {
+router.put('/:id/like', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
@@ -132,10 +132,10 @@ router.put('/like/:id', auth, async (req, res) => {
   }
 })
 
-// @route   PUT api/posts/unlike/:id
+// @route   PUT api/posts/:id/unlike
 // @desc    Unlike a post
 // @access  Private
-router.put('/unlike/:id', auth, async (req, res) => {
+router.put('/:id/unlike', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
@@ -160,11 +160,11 @@ router.put('/unlike/:id', auth, async (req, res) => {
   }
 })
 
-// @route   POST api/posts/comments/:id
+// @route   POST api/posts/:post_id/comments
 // @desc    Comment on a post
 // @access  Private
 router.post(
-  '/comments/:id',
+  '/:post_id/comments',
   [
     auth,
     [
@@ -181,7 +181,7 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select('-password')
-      const post = await Post.findById(req.params.id)
+      const post = await Post.findById(req.params.post_id)
 
       const newComment = {
         text: req.body.text,
@@ -200,12 +200,12 @@ router.post(
   },
 )
 
-// @route   DELETE api/posts/comments/:id/:comment_id
+// @route   DELETE api/posts/:post_id/comments/:comment_id
 // @desc    Delete comment
 // @access  Private
-router.delete('/comments/:id/:comment_id', auth, async (req, res) => {
+router.delete('/:post_id/comments/:comment_id', auth, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id)
+    const post = await Post.findById(req.params.post_id)
 
     // Pull out comment
     const comment = post.comments.find(
