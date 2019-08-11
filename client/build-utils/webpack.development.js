@@ -10,6 +10,10 @@ module.exports = () => ({
       '/api': 'http://localhost:5000',
     },
   },
+  output: {
+    filename: '[name].js',
+    publicPath: '/',
+  },
   resolve: {
     alias: {
       'react-dom': '@hot-loader/react-dom',
