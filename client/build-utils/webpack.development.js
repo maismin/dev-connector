@@ -7,13 +7,8 @@ module.exports = () => ({
     port: 3000,
     historyApiFallback: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-      },
-      '/profiles/api': {
-        target: 'http://localhost:5000',
-        pathRewrite: { '^/profiles/api': '/api' },
-      },
+      context: ['/api', '/profiles/api', '/posts/api'],
+      target: 'http://localhost:5000',
     },
   },
   output: {
