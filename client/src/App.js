@@ -2,6 +2,7 @@ import { hot } from 'react-hot-loader/root'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import axios from 'axios'
 import NavBar from './components/layout/NavBar'
 import Landing from './components/layout/Landing'
 import Alert from './components/layout/Alert'
@@ -22,6 +23,10 @@ import { loadUser } from './actions/auth'
 import setAuthToken from './utils/setAuthToken'
 
 import './App.css'
+
+if (process.env.mode === 'production') {
+  axios.defaults.baseURL = process.env.baseURL
+}
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
