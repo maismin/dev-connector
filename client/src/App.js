@@ -24,8 +24,8 @@ import setAuthToken from './utils/setAuthToken'
 
 import './App.css'
 
-if (process.env.mode === 'production') {
-  axios.defaults.baseURL = process.env.baseURL
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = 'https://ancient-fjord-69497.herokuapp.com'
 }
 
 if (localStorage.token) {
